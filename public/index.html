@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Movie Predictor Application</title>
+<link rel="stylesheet" href="css/type.css" type="text/css" media="screen, projection" />
+<link rel="stylesheet" href="css/layout.css" type="text/css" media="screen, projection" />
+<!--  <script src="js/angular-chart.js"></script>
+  <link rel="stylesheet" href="css/angular-chart.css">-->
+<!-- Twitter Bootstrap -->
+<!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+<!-- load angular via CDN -->
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
+<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
+<!-- our scripts -->
+<script src="js/app.js"  type="text/javascript" ></script>
+<script src="js/srv.js"  type="text/javascript" ></script>
+<script src="js/chartjs.js"  type="text/javascript" ></script>
+<script src="js/Chart.min.js"  type="text/javascript" ></script>
+
+<head>
+</head>
+<body ng-app="drug1nSample" ng-controller="AppCtrl" style="padding:0px;background-image: linear-gradient(90deg, #00648D, #a8e9ff);" >
+
+<nav class="navbar navbar-default" style="background-color: #231F20" role="navigation">
+    <div class="container">
+        <a class="navbar-brand" href="index.html"><h3 style="margin-top: -5px">Mov-wiZ</h3></a>
+    </div>
+</nav>
+
+<div class="container-fluid">
+
+    <div class="row row-contents">
+
+        <div class="col-sm-8 col-md-8 myform">
+            <div class="col-sm-8 col-md-8 myform">
+                <form class="form-horizontal" name="form">
+                    <fieldset>
+
+                        <!-- Text input-->
+                        <div class="form-group" style="margin-top: 40px">
+                            <label class="col-md-4 control-label" for="director">Director</label>
+                            <div class="col-md-6">
+                                <!--<input id="director" name="director" type="text"  ng-model="p.Director" ng-blur="fetch()"  placeholder="Select director" class="form-control input-md" required>-->
+                                <select id="director" placeholder="Select director" class="form-control" ng-model="p.Director" ng-change="fetch()" required>
+                                    <option value="">Select Director</option>
+                                    <option ng-repeat="director in directors | orderBy:sortBy">{{director}}</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="actor">Actor</label>
+                            <div class="col-md-6">
+                                <!-- <input id="actor" name="actor" type="text" ng-model="p.Actor"  ng-blur="fetch()" required placeholder="Select Actor" class="form-control input-md">-->
+                                <select id="actor" class="form-control" required placeholder="Select Actor" ng-model="p.Actor" ng-change="fetch()" required>
+                                    <option value="">Select Actor</option>
+                                    <option ng-repeat="actor in actors">{{actor}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="genre">Genre</label>
+                            <div class="col-md-6">
+                                <!-- <input id="genre" name="genre" type="text" ng-model="p.Genre" ng-blur="fetch()"  placeholder="Genre" class="form-control input-md" required>-->
+                                <select id="genre" placeholder="Select Genre" class="form-control" ng-model="p.Genre" ng-change="fetch()"
+                                        required>
+                                    <option  value="">Select Genre</option>
+                                    <option ng-repeat="genre in genres">{{genre}}</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" style="position: relative;top:-10px" for="country">Country of release</label>
+                            <div class="col-md-6">
+                                <!--<input id="country" name="country" type="text" ng-model="p.Country" placeholder="Country" class="form-control input-md" required>-->
+                                <select id="country" class="form-control" required placeholder="Select Country" ng-model="p.Country" ng-change="fetch()" required>
+                                    <option value="">Select Country</option>
+                                    <option ng-repeat="country in countries">{{country}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="runtime">Runtime</label>
+                            <div class="col-md-6">
+                                <input id="runtime" name="runtime"  ng-model="p.Runtime" size="4" required placeholder="Movie Runtime" class="form-control input-md">
+
+                            </div>
+                        </div>
+
+                        <!-- Button (Double) -->
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <button id="predict" name="predict"  ng-disabled="form.$invalid" ng-click="score()" class="btn btn-danger pull-left col-md-offset-8">Predict Success</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div><!--myForm ends here-->
+
+            <div class="col-sm-4 col-md-4 chart" style=".height: 200px;margin-top: 15px">
+                <p id="js-legend" class="chart-legend"></p>
+                <canvas id="myChart" width="200" height="200"></canvas>
+
+                <!--                    <canvas id="doughnut" class="chart chart-doughnut"
+                                            chart-data="data" chart-labels="labels">
+                                    </canvas>-->
+
+            </div>
+
+        </div>
+
+        <div class="col-sm-3 col-md-3 myFeed" style="height:600px;margin-top: 0px;padding-top: 0px">
+            <div class="container-fluid no-gutter" >
+                <ul class="list-unstyled">
+                    <li ng-repeat="item in value">
+
+                        <div class="row no-gutter" style="background:rgba(0,0,0,0.7);color:white;margin-right:-120px; border-radius: 5px;margin-top: 8px; box-shadow: 5px 5px 5px #adbbb7;
+                            padding: 10px;">
+
+                            <span style="color: lawngreen;font-size: large"><strong>{{item.Title}}</strong></span><br>
+                            <span><strong style="color: aqua">Director :</strong> {{item.Director}}</span><br>
+                            <span><strong style="color: aqua">Actor :</strong> {{item.Actor}}</span><br>
+                            <span><strong style="color: aqua">Plot :</strong>{{item.Plot}}</span><br>
+                            <a class="btn mybtn" type="button" ng-click="getResults(item)">Past Performance</a>
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+        </div><!--myFeed ends here-->
+    </div><!--row contents ends here-->
+</div>
+</body>
+</html>

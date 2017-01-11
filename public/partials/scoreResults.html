@@ -1,0 +1,30 @@
+<div class="dlg" style="padding-top: 5px;background-image: linear-gradient(90deg, #00648D, #a8e9ff);">
+	<div class="title"><img alt="" src="img/pm24x24.png" />
+		&nbsp;Prediction Results
+	</div>
+	<div class="body">
+		<br />
+		<table class="'body table">
+			<thead>
+				<tr>
+					<th ng-repeat="fname in rspHeader">{{fname}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in rspData">
+					<td ng-repeat="fval in row track by $index">{{fval}}</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<button type="button" class="btn.lg" ng-click="cancel()"><i class="glyphicon glyphicon-ok"></i>&nbsp;Close&nbsp;</button>&nbsp;
+		<div class="container-fluid">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-4"ng-init="predChart(rspData[0][5])">
+				<p id="pred-legend" class="chart-legend"></p>
+				<canvas id="predChart" width="200" height="200"></canvas>
+			</div>
+			<div class="col-sm-4"></div>
+		</div>
+	</div>
+</div>

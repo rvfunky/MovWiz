@@ -1,0 +1,16 @@
+{
+  "name": "SPSS-PM-sample-1",
+  "version": "0.1.0",
+  "description": "A Node.js app using Express delivering SPSS PM sample application 1",
+  "dependencies": {
+    "body-parser": "~1.0.1",
+    "chart.js": "^2.1.1",
+    "express": "~4.0.0",
+    "mongodb": "^2.1.18",
+    "request": "2.36.x"
+  },
+  "engines": {
+    "node": "0.10.26"
+  },
+  "repository": {}
+}
